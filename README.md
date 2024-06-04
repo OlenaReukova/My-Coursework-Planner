@@ -1,4 +1,4 @@
-# Video Hub
+# Video App
 
 Video App is a platform where users can share their favorite YouTube videos, allowing others to discover, upvote, downvote, and engage with the content. Whether you're looking for trending videos, exploring diverse topics, or simply wanting to share entertaining content, Video Hub is the go-to place.
 
@@ -51,20 +51,21 @@ Video App is a platform where users can share their favorite YouTube videos, all
 
 ## Prerequisites to Setting Up the Project
 
-- Node.js v18 and npm
+- Node.js v20 and npm
+- React+Vite
 - Git
 
 ## Getting Started
 
-- Follow these steps to set up and run the Video Hub project locally:
+- Follow these steps to set up and run the Video App project locally:
 
   1. Clone this repository to your computer.
 
   ```sh
-    git clone 
+    git clone https://github.com/OlenaReukova/Video-app.git
   ```
 
-  2. Create a new database named "video_hub" in the postgreSQL shell. Ensure you have PostgreSQL installed on your machine.
+  2. Create a new database named "video" in the postgreSQL shell. Ensure you have PostgreSQL installed on your machine.
 
   ```sql
       CREATE DATABASE video;
@@ -86,7 +87,7 @@ Video App is a platform where users can share their favorite YouTube videos, all
   5. Navigate to the project directory:
 
   ```sh
-    cd My-Coursework-Planner
+    cd Video-app
   ```
 
   6. Open two new terminal window and install Dependencies
@@ -104,4 +105,3 @@ Video App is a platform where users can share their favorite YouTube videos, all
   ```
 
   7. Open your browser and visit http://localhost:5173 in your browser to view the app and access the Video Hub.
-

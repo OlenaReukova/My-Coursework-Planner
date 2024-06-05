@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import './styles/VideoList.css';
 
-const VideoList = () => {
+const VideoList = ({ onVideoClick }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +41,10 @@ const VideoList = () => {
       </Typography>
       <List className='video-list'>
         {videos.map((video) => (
-          <ListItem key={video.id} className='video-list-item'>
+          <ListItem
+            key={video.id}
+            className='video-list-item'
+            onClick={() => onVideoClick(video)}>
             <ListItemText primary={video.title} />
           </ListItem>
         ))}

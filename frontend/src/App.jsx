@@ -5,7 +5,6 @@ import AddVideoForm from './components/AddVideoForm';
 import VideoCard from './components/VideoCard';
 import SortFilters from './components/SortFilters';
 import Search from './components/Search';
-import dData from './exampleresponse.json';
 import './App.css';
 import VideoList from './components/VideoList';
 
@@ -16,7 +15,6 @@ function App() {
   const [error, setError] = useState(null);
   const [votedVideos, setVotedVideos] = useState([]);
 
-  console.log('hello');
   useEffect(() => {
     fetchVideos();
   }, []);
@@ -45,6 +43,11 @@ function App() {
     } catch (error) {
       console.error('API fetch error:', error.message);
     }
+  };
+
+  const handleVideoClick = (video) => {
+    const updatedVideos = [video, ...videos.filter((v) => v.id !== video.id)];
+    setVideos(updatedVideos);
   };
 
   const addVideo = async (video) => {
@@ -186,7 +189,7 @@ function App() {
 
   return (
     <Container maxWidth='lg'>
-      <VideoList />
+      <VideoList onVideoClick={handleVideoClick} />
       <Header videos={videos} />
       <div className='App'>
         <AddVideoForm onAddVideo={addVideo} />
@@ -204,7 +207,7 @@ function App() {
                   onSortByTitle={sortByTitle}
                 />
               </div>
-              <div className='video-list'>
+              <div className='video-list-content'>
                 {displayedVideos.map((video) => (
                   <VideoCard
                     key={video.id}

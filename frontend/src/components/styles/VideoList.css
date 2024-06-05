@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 100px;
+  width: 250px;
   background-color: #000;
   color: #fff;
   display: flex;
@@ -35,4 +35,11 @@
 
 .video-list-item:hover {
   background-color: #444;
+}
+
+/* Media query for mobile and tablet devices */
+@media (max-width: 768px) {
+  .video-list-container {
+    display: none;
+  }
 }

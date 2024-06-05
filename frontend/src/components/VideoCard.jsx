@@ -3,7 +3,6 @@ import YouTube from 'react-youtube';
 import { Card, CardContent, Typography } from '@mui/material';
 import RemoveButton from './RemoveButton';
 import VoteButtons from './VoteButtons';
-
 import '../components/styles/VideoCard.css';
 
 const VideoCard = ({ video, removeVideo, upVote, downVote, votedVideos }) => {
@@ -23,12 +22,10 @@ const VideoCard = ({ video, removeVideo, upVote, downVote, votedVideos }) => {
     return date.toLocaleDateString(undefined, options);
   };
 
-  // Check if the uploadedDate property exists in the video object
   const isFromAPI = video.uploadedDate ? true : false;
   const uploadedDate = isFromAPI
     ? video.uploadedDate
-    : // : "2021-01-01T00:00:00.000Z";
-      new Date().toISOString();
+    : new Date().toISOString();
 
   const formattedDate = formatDate(uploadedDate);
 

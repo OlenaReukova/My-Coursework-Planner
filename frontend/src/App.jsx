@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import Header from './components/Header';
 import AddVideoForm from './components/AddVideoForm';
@@ -7,7 +6,6 @@ import VideoCard from './components/VideoCard';
 // import SortFilters from './components/SortFilters';
 // import Search from './components/Search';
 import dData from './exampleresponse.json';
-
 import './App.css';
 
 function App() {
@@ -32,7 +30,6 @@ function App() {
 
       const jsonData = await response.json();
 
-      // Sort the videos by ID in descending order (latest video first)
       const sortedVideos = jsonData.sort((a, b) => b.id - a.id);
 
       const updatedVideos = sortedVideos.map((video) => {
@@ -76,7 +73,7 @@ function App() {
 
   const removeVideo = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5001/${id}`, {
+      const response = await fetch(`http://localhost:5001/videos/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
@@ -90,18 +87,20 @@ function App() {
 
   const upVote = async (id) => {
     if (votedVideos.includes(id)) {
-      // User has already voted on this video
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/${id}/rating`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ like: true }),
-      });
+      const response = await fetch(
+        `http://localhost:5001/videos/${id}/rating`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ like: true }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to upvote video (ID: ${id})`);
       }
@@ -121,18 +120,20 @@ function App() {
 
   const downVote = async (id) => {
     if (votedVideos.includes(id)) {
-      // User has already voted on this video
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/${id}/rating`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ dislike: true }),
-      });
+      const response = await fetch(
+        `http://localhost:5001/videos/${id}/rating`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ dislike: true }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to downvote video (ID: ${id})`);
       }

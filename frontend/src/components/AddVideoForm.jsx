@@ -17,13 +17,6 @@ const AddVideoForm = ({ onAddVideo }) => {
     setUrl(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onAddVideo({ title, url });
-    setTitle('');
-    setUrl('');
-  };
-
   const handleAddVideoClick = () => {
     setShowForm((prevShowForm) => !prevShowForm); // Toggle the value of showForm
     setErrorMessage('');
@@ -60,7 +53,7 @@ const AddVideoForm = ({ onAddVideo }) => {
         {showForm ? 'Cancel' : 'Add Video'}
       </h2>
       {showForm && (
-        <form className='add-video-form' onSubmit={handleSubmit}>
+        <form className='add-video-form' onSubmit={handleAddVideo}>
           <div>
             <label htmlFor='title'>Title</label>
             <TextField
@@ -87,7 +80,7 @@ const AddVideoForm = ({ onAddVideo }) => {
               {errorMessage}
             </Typography>
           )}
-          <Button variant='contained' type='submit' onClick={handleAddVideo}>
+          <Button variant='contained' type='submit'>
             Add
           </Button>
         </form>

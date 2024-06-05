@@ -1,12 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const jsonEndpoints = require('./jsonEndpoints');
 const {
   testConnection,
   createSchema,
   createTable,
   populateTable,
-  hasRecords,
   db,
 } = require('./databaseSetup');
 const dbEndpoints = require('./dbEndpoints');
@@ -18,19 +16,24 @@ require('dotenv').config();
 app.use(express.json());
 app.use(cors());
 
-testConnection()
-  .then(createSchema) // Ensure schema is created before creating tables
-  .then(createTable)
-  .then(populateTable)
-  .catch((error) => {
+// Use async IIFE to ensure database setup before starting the server
+(async () => {
+  try {
+    await testConnection();
+    await createSchema();
+    await createTable();
+    await populateTable();
+
+    // Attach the endpoints only after the database is ready
+    app.use('/videos', dbEndpoints(db));
+
+    const server = app.listen(port, () => {
+      const { address, port } = server.address();
+      const host = address === '::' ? 'localhost' : address;
+      console.log(`Server is running at http://${host}:${port}`);
+    });
+  } catch (error) {
     console.error('Error setting up database:', error);
-  });
-
-app.use('/videos', jsonEndpoints);
-app.use('/', dbEndpoints(db));
-
-const server = app.listen(port, () => {
-  const { address, port } = server.address();
-  const host = address === '::' ? 'localhost' : address;
-  console.log(`Server is running at http://${host}:${port}`);
-});
+    process.exit(1); // Exit the process with failure
+  }
+})();

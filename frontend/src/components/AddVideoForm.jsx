@@ -6,7 +6,7 @@ import '../components/styles/AddVideoForm.css';
 const AddVideoForm = ({ onAddVideo }) => {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleTitleChange = (event) => {

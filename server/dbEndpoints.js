@@ -4,12 +4,10 @@ const router = express.Router();
 const dbEndpoints = (db) => {
   router.get('/', async (req, res) => {
     try {
-      const result = await db.query('SELECT * FROM videos ORDER BY id ASC');
-      console.log('Database connection successful');
-
-      const dbVideos = [...result.rows];
-
-      res.json(dbVideos);
+      const result = await db.query(
+        'SELECT * FROM "videorec"."videos" ORDER BY id ASC'
+      );
+      res.json(result.rows);
     } catch (error) {
       console.error('Error fetching videos from the database:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -22,14 +20,11 @@ const dbEndpoints = (db) => {
     if (title && url) {
       try {
         const result = await db.query(
-          'INSERT INTO videos (title, url, uploadDate, rating) VALUES ($1, $2, CURRENT_TIMESTAMP, 0) RETURNING id',
+          'INSERT INTO "videorec"."videos" (title, url, uploadDate, rating) VALUES ($1, $2, CURRENT_TIMESTAMP, 0) RETURNING id',
           [title, url]
         );
 
-        console.log('Result of database query:', result.rows);
-
         const id = result.rows[0].id;
-
         res.status(201).json({ id }); // Use 201 Created status for successful creation
       } catch (error) {
         console.error('Error adding video:', error.message);
@@ -44,7 +39,7 @@ const dbEndpoints = (db) => {
     const id = Number(req.params.id);
 
     try {
-      await db.query('DELETE FROM videos WHERE id = $1', [id]);
+      await db.query('DELETE FROM "videorec"."videos" WHERE id = $1', [id]);
       res.status(204).json({ message: 'Video deleted successfully' });
     } catch (error) {
       console.error('Error deleting video:', error);
@@ -61,12 +56,12 @@ const dbEndpoints = (db) => {
       let queryParams = [];
 
       if (like) {
-        query = 'UPDATE videos SET rating = rating + 1';
+        query = 'UPDATE "videorec"."videos" SET rating = rating + 1';
         queryParams.push(videoId);
       }
 
       if (dislike) {
-        query = 'UPDATE videos SET rating = rating - 1';
+        query = 'UPDATE "videorec"."videos" SET rating = rating - 1';
         queryParams.push(videoId);
       }
 

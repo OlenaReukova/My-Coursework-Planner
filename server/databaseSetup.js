@@ -1,4 +1,3 @@
-const express = require('express');
 const { Pool } = require('pg');
 const fs = require('fs');
 require('dotenv').config();
@@ -48,9 +47,8 @@ const createTable = async () => {
     )`;
 
   try {
-    const result = await db.query(createTableQuery);
+    await db.query(createTableQuery);
     console.log("Table 'videos' created or already exists.");
-    return result;
   } catch (err) {
     console.error("Error creating the 'videos' table:", err);
     throw err;
@@ -88,22 +86,10 @@ const populateTable = async () => {
   console.log("Populated 'videos' table from exampleResponse.json");
 };
 
-// Function to check if there are any records in the "videos" table
-const hasRecords = async () => {
-  try {
-    const result = await db.query('SELECT COUNT(*) FROM "videorec"."videos"');
-    return parseInt(result.rows[0].count) > 0;
-  } catch (error) {
-    console.error("Error checking for records in 'videos' table:", error);
-    throw error;
-  }
-};
-
 module.exports = {
   createSchema,
   createTable,
   populateTable,
   testConnection,
-  hasRecords,
   db, // Export the db instance
 };

@@ -55,7 +55,7 @@ const AddVideoForm = ({ onAddVideo }) => {
       {showForm && (
         <form className='add-video-form' onSubmit={handleAddVideo}>
           <div>
-            <label htmlFor='title'>Title</label>
+            {/* <label htmlFor='title'>Title</label> */}
             <TextField
               id='title'
               placeholder='Video title'
@@ -65,7 +65,7 @@ const AddVideoForm = ({ onAddVideo }) => {
             />
           </div>
           <div>
-            <label htmlFor='url'>URL</label>
+            {/* <label htmlFor='url'>URL</label> */}
             <TextField
               id='url'
               placeholder='Youtube Video Url'

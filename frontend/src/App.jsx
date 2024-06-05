@@ -3,10 +3,11 @@ import { Container } from '@mui/material';
 import Header from './components/Header';
 import AddVideoForm from './components/AddVideoForm';
 import VideoCard from './components/VideoCard';
-// import SortFilters from './components/SortFilters';
-// import Search from './components/Search';
+import SortFilters from './components/SortFilters';
+import Search from './components/Search';
 import dData from './exampleresponse.json';
 import './App.css';
+import VideoList from './components/VideoList';
 
 function App() {
   const [videos, setVideos] = useState([]);
@@ -185,6 +186,7 @@ function App() {
 
   return (
     <Container maxWidth='lg'>
+      <VideoList />
       <Header videos={videos} />
       <div className='App'>
         <AddVideoForm onAddVideo={addVideo} />
@@ -196,11 +198,11 @@ function App() {
           ) : (
             <>
               <div className='header-controls'>
-                {/* <SortFilters
+                <Search onSearch={searchVideos} />
+                <SortFilters
                   onSortByVotes={sortByVotes}
                   onSortByTitle={sortByTitle}
-                /> */}
-                {/* <Search onSearch={searchVideos} /> */}
+                />
               </div>
               <div className='video-list'>
                 {displayedVideos.map((video) => (

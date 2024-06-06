@@ -37,7 +37,7 @@ const VideoList = ({ onVideoClick }) => {
   return (
     <div className='video-list-container'>
       <Typography variant='h6' className='video-list-title'>
-        Video Titles
+        Video List
       </Typography>
       <List className='video-list'>
         {videos.map((video) => (

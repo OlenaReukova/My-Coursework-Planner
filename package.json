@@ -1,0 +1,26 @@
+{
+  "name": "video-app",
+  "version": "1.0.0",
+  "description": "video-app",
+  "main": "index.js",
+  "workspaces": [
+    "frontend",
+    "server"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend:dev": "npm --workspace frontend run dev",
+    "frontend:build": "npm --workspace frontend run build",
+    "frontend:preview": "npm --workspace frontend run preview",
+    "backend:dev": "npm --workspace server run dev",
+    "backend:start": "npm --workspace server run start",
+    "dev": "concurrently \"npm run frontend:dev\" \"npm run backend:dev\"",
+    "build": "npm run frontend:build",
+    "start": "npm run frontend:preview & npm run backend:start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

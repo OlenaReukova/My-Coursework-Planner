@@ -20,7 +20,7 @@ jobs:
           echo "${{secrets.PRIVATE_KEY}}" > ~/.ssh/PrivateKey.pem
 
       - name: Change the mode
-        run: chmod 400 PrivateKey.pem
+        run: chmod 400 ~/.ssh/PrivateKey.pem
 
       - name: Update my repo in EC2
         run: |
@@ -30,7 +30,7 @@ jobs:
 
       - name: npm install and restart
         run: |
-          ssh -i "PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << 'EOF'
+          ssh -i "~/.ssh/PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << 'EOF'
           cd ~/app
           npm install
           pm2 restart all

@@ -22,7 +22,7 @@ jobs:
       - name: Update my repo in EC2
         run:
           rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \
-          -e "ssh -i "PrivateKey.pem" \
+          -e "ssh -i PrivateKey.pem" \
           . ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
 
       - name: npm install restart

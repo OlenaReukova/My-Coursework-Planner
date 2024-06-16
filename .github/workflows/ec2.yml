@@ -20,7 +20,7 @@ jobs:
         run: chmod 400 PrivateKey.pem
 
       - name: SSH
-        run:
+        run: |
           ssh -i "PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << EOF
           cd app
           git pull

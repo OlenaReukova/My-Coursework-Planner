@@ -24,9 +24,7 @@ jobs:
 
       - name: Update my repo in EC2
         run: |
-          rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \
-          -e "ssh -i ~/.ssh/PrivateKey.pem -o StrictHostKeyChecking=no" \
-          . ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
+          scp -i ~/.ssh/PrivateKey.pem server/* -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
 
       - name: npm install and restart
         run: |

@@ -27,6 +27,10 @@ app.use(cors());
     // Attach the endpoints only after the database is ready
     app.use('/videos', dbEndpoints(db));
 
+    app.get('/', function (_, res) {
+      res.status(200).json('hello world!');
+    });
+
     const server = app.listen(port, () => {
       const { address, port } = server.address();
       const host = address === '::' ? 'localhost' : address;

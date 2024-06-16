@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ec2-16-171-30-151.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
-          echo "${{secrets.PRIVATE_KEY}}" > PrivateKey.pem
+          echo "${{secrets.PRIVATE_KEY}}" > ~/.ssh/PrivateKey.pem
 
       - name: Change the mode
         run: chmod 400 PrivateKey.pem

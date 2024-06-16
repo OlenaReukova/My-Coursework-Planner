@@ -1,0 +1,32 @@
+name: Deploy to Amazon EC2
+
+on:
+  push:
+    branches: ['Personal_website']
+
+env:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Private Key file
+        run: echo "${{secrets.PRIVATE_KEY}}" > PrivateKey.pem
+
+      - name: change the Mode
+        run: chmod 400 PrivateKey.pem
+
+      - name: SSH
+        run:
+          ssh -i "PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << EOF
+          cd app
+          git pull
+          npm install
+          pm2 restart all
+          EOF

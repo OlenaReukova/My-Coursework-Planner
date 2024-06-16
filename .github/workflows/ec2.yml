@@ -24,7 +24,7 @@ jobs:
 
       - name: Update my repo in EC2
         run: |
-          scp -i ~/.ssh/PrivateKey.pem server/* -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/PrivateKey.pem server/*  ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
 
       - name: npm install and restart
         run: |

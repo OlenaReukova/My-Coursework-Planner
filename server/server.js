@@ -28,7 +28,7 @@ app.use(cors());
     app.use('/videos', dbEndpoints(db));
 
     app.get('/', function (_, res) {
-      res.status(200).json('hello world!');
+      res.status(200).json('goodbye world!');
     });
 
     const server = app.listen(port, () => {

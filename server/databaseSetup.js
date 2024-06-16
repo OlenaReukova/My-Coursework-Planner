@@ -8,7 +8,7 @@ const db = new Pool({
   database: process.env.DB_DATABASE,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'localhost', //<-
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
@@ -57,7 +57,7 @@ const createTable = async () => {
 
 // Function to populate the table from videos
 const populateTable = async () => {
-  const jsonFilePath = './exampleResponse.json';
+  const jsonFilePath = './exampleresponse.json';
   const jsonVideos = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
 
   for (const video of jsonVideos) {
@@ -83,7 +83,7 @@ const populateTable = async () => {
     }
   }
 
-  console.log("Populated 'videos' table from exampleResponse.json");
+  console.log("Populated 'videos' table from exampleresponse.json");
 };
 
 module.exports = {

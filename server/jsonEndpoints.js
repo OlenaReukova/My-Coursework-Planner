@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const router = express.Router();
 
-const jsonFilePath = './exampleResponse.json';
+const jsonFilePath = './exampleresponse.json';
 const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
 
 router.get('/', async (req, res) => {

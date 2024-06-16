@@ -21,7 +21,9 @@ function App() {
 
   const fetchVideos = async () => {
     try {
-      const response = await fetch('http://localhost:5001/videos');
+      const response = await fetch(
+        `${import.meta.env.VITE_API_ENDPOINT}/videos`
+      );
 
       if (!response.ok) {
         throw new Error('Failed to fetch videos from API!');
@@ -52,13 +54,16 @@ function App() {
 
   const addVideo = async (video) => {
     try {
-      const response = await fetch('http://localhost:5001/videos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(video),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_ENDPOINT}/videos`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(video),
+        }
+      );
       if (!response.ok) {
         throw new Error('Failed to add video!');
       }
@@ -77,9 +82,12 @@ function App() {
 
   const removeVideo = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5001/videos/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_ENDPOINT}/videos/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
       if (!response.ok) {
         throw new Error('Video not found!');
       }
@@ -96,7 +104,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/videos/${id}/rating`,
+        `${import.meta.env.VITE_API_ENDPOINT}/videos/${id}/rating`,
         {
           method: 'POST',
           headers: {
@@ -129,7 +137,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/videos/${id}/rating`,
+        `${import.meta.env.VITE_API_ENDPOINT}/videos/${id}/rating`,
         {
           method: 'POST',
           headers: {

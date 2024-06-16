@@ -10,7 +10,9 @@ const VideoList = ({ onVideoClick }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://localhost:5001/videos');
+        const response = await fetch(
+          `${import.meta.env.VITE_API_ENDPOINT}/videos`
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch videos from API!');
         }

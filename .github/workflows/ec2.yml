@@ -19,11 +19,16 @@ jobs:
       - name: change the Mode
         run: chmod 400 PrivateKey.pem
 
-      - name: SSH
+      - name: Update my repo in EC2
+        run:
+          rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \
+          -e "ssh -i "PrivateKey.pem" \
+          . ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
+
+      - name: npm install restart
         run: |
           ssh -i "PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << EOF
           cd app
-          git pull
           npm install
           pm2 restart all
           EOF

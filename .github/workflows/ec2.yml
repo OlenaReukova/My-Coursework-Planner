@@ -19,6 +19,11 @@ jobs:
       - name: change the Mode
         run: chmod 400 PrivateKey.pem
 
+      - name: Add EC2 to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ec2-16-171-30-151.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
       - name: Update my repo in EC2
         run:
           rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \

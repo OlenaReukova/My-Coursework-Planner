@@ -24,9 +24,6 @@ jobs:
       - name: Build the React app for deployment
         run: npm run build
 
-      - name: List build directory contents (optional for verification)
-        run: ls ./build
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -35,4 +32,4 @@ jobs:
           aws-region: eu-north-1
 
       - name: Deploy to S3
-        run: aws s3 sync ./build s3://videoapplication-demo-s3 --delete
+        run: aws s3 sync ./dist s3://videoapplication-demo-s3 --delete

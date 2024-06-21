@@ -14,7 +14,7 @@ const Header = ({ videos }) => {
     <header className='header-container'>
       <Container maxWidth='md'>
         <Typography variant='h4' align='center' gutterBottom>
-          *Your favourite Video Playlist*
+          Your favourite Video Playlist
         </Typography>
         {/* <Carousel infiniteLoop autoPlay showThumbs={false}>
           {videos.map((video) => (

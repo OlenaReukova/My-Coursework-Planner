@@ -1,23 +1,23 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
+#parent image started with comand ARG or just FROM (this is the first layer of a docker image)
 ARG NODE_VERSION=20.0.0
 
+# we downloaded a node image and we want to pull node from that image
 FROM node:${NODE_VERSION}-alpine
 
-WORKDIR /usr/src/app
+# next layer of the image-we specify working directory of the image
+WORKDIR /server
 
-# Copy the rest of the source files into the image.
+# I want to copy the files from current derectory (first .), to the folder (second . root directory where the image created, upper we specify working derectory) into the image.
 COPY . .
 
-# Install dependencies
+# Installing dependencies, when the image has been created -to add all the dependencies to the image
 RUN npm install
 
-# Expose the port that the application listens on.
-EXPOSE 3000
 
-# Run the application.
-CMD npm run start
+# Expose the port that the application (container) listens on.
+EXPOSE 4200
+
+# Container, based on the image, is running application - Run the application.
+CMD ["node", "server.js"]

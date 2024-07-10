@@ -2,72 +2,34 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-      - main:['Personal_website']
-
-  pull_request:
-    branches:
-      - main:['Personal_website']
-
-env:
-  docker-username: ${{ secrets.DOCKER_USERNAME }}
-  docker-token: ${{ secrets.DOCKER_TOKEN }}
-  key: ${{ secrets.EC2_SSH_KEY }}
+    # branches: ['Personal_website']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{  secrets.DOCKER_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          push: true
-          dockerfile: .Dockerfile
-          tags: abubakarmeigag/beko-videos:latest
-
   deploy:
-    needs: build
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{  secrets.DOCKER_TOKEN }}
-
-      - name: Set permissions for private key
+      - name: Create Private Key file
         run: |
-          echo "${{ env.key }}" > key.pem
-          chmod 600 key.pem
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ec2-16-171-30-151.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+          echo "${{secrets.PRIVATE_KEY}}" > ~/.ssh/PrivateKey.pem
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          port: 22
-          script: |
-            sudo docker stop beko-videos
-            sudo docker rm beko-videos
-            sudo docker pull abubakarmeigag/beko-videos:latest
-            sudo docker run -d --name beko-videos -p 5002:5002 -e DBConnLink=${{ secrets.DBCONNLINK }} abubakarmeigag/beko-videos:latest
+      - name: Change the mode
+        run: chmod 400 ~/.ssh/PrivateKey.pem
+
+      - name: Update my repo in EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/PrivateKey.pem server/*  ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com:~/app
+
+      - name: npm install and restart (<< 'EOF' keep terminal open untill I write this one again)
+        run: |
+          ssh -i "~/.ssh/PrivateKey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-16-171-30-151.eu-north-1.compute.amazonaws.com << 'EOF'
+          cd ~/app
+          npm install
+          pm2 restart all
+          EOF

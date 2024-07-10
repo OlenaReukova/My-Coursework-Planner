@@ -3,11 +3,7 @@ name: Deploy to EC2 from docker image
 on:
   push:
     branches:
-      - main:['Personal_website']
-
-  # pull_request:
-  #   branches:
-  #     - main:['Personal_website']
+      - Personal_website
 
 env:
   docker-username: ${{ secrets.DOCKER_USERNAME }}

@@ -17,7 +17,7 @@ RUN npm install
 
 
 # Expose the port that the application (container) listens on.
-EXPOSE 4200
+EXPOSE 5001
 
 # Container, based on the image, is running application - Run the application.
 CMD ["node", "server.js"]
